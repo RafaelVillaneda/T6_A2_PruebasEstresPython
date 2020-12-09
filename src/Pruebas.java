@@ -111,8 +111,8 @@ class MetodosBusqueda{
 
 	
 }
-class FuncionHash{
-	String [] arreglo;
+class Hash{
+	String[] arreglo;
 	int tamaño;
 	int contador;
 	int [] contador1=new int[3];// 1-> recorridos 2-> intercambios 3-> comparaciones
@@ -126,45 +126,47 @@ class FuncionHash{
 		contador1[0]=0;
 		contador1[2]=0;
 	}
-	public FuncionHash(int tam) {
+	// Constructor
+	public Hash(int tam) {
 		tamaño = tam;
 		arreglo = new String[tam];
 		Arrays.fill(arreglo, "-1");
 	}
-	public void funsionHash(String[] cadArreglo,String[]arreglo) {
+
+	// Funcion HASH
+	public void funcionHash(String[] cadArreglo, String[] arreglo) {
 		int i;
 		// Ciclo para asiganar a la varible elemento el valor de la cadena
 		for (i = 0; i < cadArreglo.length; i++) {
+			contador1[0]++;
 			String elemento = cadArreglo[i];
-			int indiceArreglo = Integer.parseInt(elemento) % 99;
+			int indiceArreglo = Integer.parseInt(elemento) % 20;
 			System.out.println("Indice: " + indiceArreglo + " para " + elemento);
 			// Mpetodo para solucionar una colision
 			while (arreglo[indiceArreglo] != "-1") {
+				contador1[2]++;
+				contador1[0]++;
 				indiceArreglo++;
 				System.out.println("Colisión en el indice: " + (indiceArreglo - 1) + " cambiando por " + indiceArreglo);
-				// Cambiar al indice siguiente y asi evitar la colision
-				indiceArreglo %= tamaño; // Para volver a sacar el valor
+				indiceArreglo %= tamaño; 
 			}
 			arreglo[indiceArreglo] = elemento;
 		}
 	}
-	//Metodo para mostrar la tabla hash
-	public void mostrar(){
+
+	// Metodo para mostrar la funcion hash
+	public void mostrar() {
 		int incremento = 0;
 		int j;
 
 		for (int i = 0; i < 1; i++) {
 			incremento += 100;
-			for (j = 0; j < 100; j++) {
-			}
 			System.out.println("");
 			System.out.println("------------------------------------------------------------------");
 			for (j = incremento - 100; j < incremento; j++) {
 				System.out.format(" | %3s " + " ", j);
 			}
 			System.out.println(" | ");
-			for (int k = 0; k < 100; k++) {
-			}
 			System.out.println();
 			for (j = incremento - 100; j < incremento; j++) {
 				if (arreglo[j].equals("-1")) {
@@ -176,25 +178,29 @@ class FuncionHash{
 
 			System.out.println("|");
 			System.out.println("------------------------------------------------------------------");
-			for (j = 0; j < 100; j++) {
-			}
 			System.out.println("");
 		}
-	}//Metodo
+	}
+
+	// Metodo para buscar una clave de los elementos
 	public String buscarClave(String elemento) {
-		int indiceArrglo = Integer.parseInt(elemento) % 7;
+		
+		int indiceArrglo = Integer.parseInt(elemento) % 99;
 		int contador = 0;
 		
 		while (arreglo[indiceArrglo] != "-1") {
-			if (arreglo[indiceArrglo] == elemento) {
-				System.out.println("Elemento " + elemento + " se encontro en el indice" + indiceArrglo);
+			contador1[0]++;
+			contador1[2]++;
+			if (arreglo[indiceArrglo].equals(elemento)) {
+				System.out.println("Elemento " + elemento + " se encontro en el indice " + indiceArrglo);
 				return arreglo[indiceArrglo];
 			}
 			indiceArrglo++;
 			indiceArrglo %= tamaño;
 			contador++;
-			if (contador > 99) {
-				System.out.println("Error");
+			contador1[2]++;
+			if (contador > 100) {
+				System.out.print("Error");
 				break;
 			}
 		}
@@ -218,10 +224,11 @@ class pruebasEstres{
 				vectorConvertido[i]=String.valueOf(vector100elementos[i]);
 			}
 			System.out.println(Arrays.toString(vectorConvertido ));
-			FuncionHash funcion=new FuncionHash(100);
-			funcion.funsionHash(vectorConvertido, funcion.arreglo);
+			Hash funcion=new Hash(100);
+			funcion.funcionHash(vectorConvertido, funcion.arreglo);
 			funcion.mostrar();
 			funcion.buscarClave(String.valueOf(buscado));
+			funcion.mostrarContador();
 		}
 		
 	}
