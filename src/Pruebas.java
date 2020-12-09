@@ -200,7 +200,7 @@ class Hash{
 			contador++;
 			contador1[2]++;
 			if (contador > 100) {
-				System.out.print("Error");
+				System.out.println("------Error-------");
 				break;
 			}
 		}
@@ -210,13 +210,16 @@ class Hash{
 
 class pruebasEstres{
 	public void pruebaEstres(String op,int buscado,int vector100elementos[]) {
-		
+		long tTnicio,tFin;
 		if(op.equals("1")) {
 			MetodosBusqueda busqueda=new MetodosBusqueda();
 			vector100elementos=busqueda.ordenamientoMezclaDirecto(vector100elementos);
 			busqueda.reiniciarContador();
 			System.out.println(Arrays.toString(vector100elementos ));
+			tTnicio=System.nanoTime();
 			busqueda.busquedaBinaria(vector100elementos, buscado);
+			tFin=System.nanoTime();
+			System.out.println("Tardo: "+(tFin-tTnicio));
 			busqueda.mostrarContador();
 		}else {
 			String vectorConvertido[]=new String[vector100elementos.length];
@@ -225,9 +228,12 @@ class pruebasEstres{
 			}
 			System.out.println(Arrays.toString(vectorConvertido ));
 			Hash funcion=new Hash(100);
+			tTnicio=System.nanoTime();
 			funcion.funcionHash(vectorConvertido, funcion.arreglo);
 			funcion.mostrar();
 			funcion.buscarClave(String.valueOf(buscado));
+			tFin=System.nanoTime();
+			System.out.println("Tardo: "+(tFin-tTnicio));
 			funcion.mostrarContador();
 		}
 		
